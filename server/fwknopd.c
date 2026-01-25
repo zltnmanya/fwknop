@@ -191,6 +191,14 @@ main(int argc, char **argv)
             clean_exit(&opts, NO_FW_CLEANUP, EXIT_SUCCESS);
         }
 
+#if defined(QRENCODE_ENABLE)
+        if(opts.dump_qr == 1)
+        {
+            dump_access_list_qr(&opts);
+            clean_exit(&opts, NO_FW_CLEANUP, EXIT_SUCCESS);
+        }
+#endif
+
         /* Now is the right time to bail if we're just parsing the configs
         */
         if(opts.exit_after_parse_config)

@@ -638,6 +638,9 @@ typedef struct fko_srv_options
      * then exit.
     */
     unsigned char   dump_config;        /* Dump current configuration flag */
+#if defined(QRENCODE_ENABLE)
+    unsigned char   dump_qr;            /* Dump access stanzas as qr codes */
+#endif
     unsigned char   foreground;         /* Run in foreground flag */
     unsigned char   kill;               /* flag to initiate kill of fwknopd */
     unsigned char   rotate_digest_cache;/* flag to force rotation of digest */

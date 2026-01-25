@@ -130,6 +130,11 @@ int compare_addr_list(acc_int_list_t *source_list, const uint32_t ip);
  */
 int acc_check_port_access(acc_stanza_t *acc, char *port_str);
 
+#if defined(QRENCODE_ENABLE)
+void
+dump_access_list_qr(const fko_srv_options_t *opts);
+#endif
+
 /**
  * \brief Dumps the current configuration to stdout
  *

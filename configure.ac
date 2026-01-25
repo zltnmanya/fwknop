@@ -159,6 +159,21 @@ fi
 
 AM_CONDITIONAL([WANT_LIBFIU_SUPPORT], [test "$want_libfiu_support" = yes])
 
+want_libqrencode_support=no
+AC_ARG_ENABLE([libqrencode-support],
+  [AS_HELP_STRING([--enable-libqrencode-support],
+    [Build fwknop binaries with libqrencode support @<:@default is to disable@:>@])],
+  [want_libqrencode_support=$enableval],
+  [])
+
+if test "x$want_libqrencode_support" = "xyes"; then
+    AC_DEFINE([HAVE_LIBQRENCODE], [1], [Define for fault injection testing support])
+    FKO_CHECK_COMPILER_ARG([-DQRENCODE_ENABLE])
+    FKO_CHECK_COMPILER_ARG_LDFLAGS_ONLY([-lqrencode])
+fi
+
+AM_CONDITIONAL([WANT_LIBFIU_SUPPORT], [test "$want_libqrencode_support" = yes])
+
 dnl Decide whether or not to enable C unit testing
 dnl
 want_c_unit_tests=no

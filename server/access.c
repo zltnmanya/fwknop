@@ -40,6 +40,10 @@
 #include "cmd_cycle.h"
 #include <dirent.h>
 
+#if defined(QRENCODE_ENABLE)
+#include <qrencode.h>
+#endif
+
 #define FATAL_ERR -1
 
 #ifndef SUCCESS
@@ -2198,6 +2202,66 @@ cleanup_and_bail:
     free_acc_port_list(in_pl);
     return(res);
 }
+
+#if defined(QRENCODE_ENABLE)
+static void
+print_qr(QRcode* qrcode)
+{
+    const int margin = 2;
+    static const char *bw[] = {
+        "\xE2\x96\x88", /* both */
+        "\xE2\x96\x84", /* lower half */
+        "\xE2\x96\x80", /* upper half */
+        " ", /* neither */
+    };
+
+    int size = qrcode->width;
+    for (int y = -margin * 2; y < size + margin * 2; y+=2)
+    {
+        for (int x = -margin * 2; x < size + margin * 2; x++)
+        {
+            uint8_t bits = 0;
+            if (x >= 0 && y >= 0 && x < size && y < size) {
+              bits = (qrcode->data[y * size + x] & 1);
+              if (y + 1 < size && (qrcode->data[(y + 1) * size + x] & 1))
+                bits |= 2;
+            }
+            printf("%s", bw[bits]);
+        }
+        printf("\n");
+    }
+}
+
+void
+dump_access_list_qr(const fko_srv_options_t *opts)
+{
+    acc_stanza_t    *acc = opts->acc_stanzas;
+    while(acc)
+    {
+        char buf[4096];
+        snprintf(buf, sizeof(buf), "KEY_BASE64:%s HMAC_KEY_BASE64:%s",
+            acc->key_base64,
+            acc->hmac_key_base64 
+        );
+
+        QRcode* qrcode = QRcode_encodeString(buf, 0, QR_ECLEVEL_L, QR_MODE_8, 1);
+        if (!qrcode)
+        {
+            fprintf(stderr, "\n    ** Failed to encode to QR code **\n\n");
+        }
+        else
+        {
+            fprintf(stdout, "Access stanza for SOURCE: %s\n\n", acc->source);
+            print_qr(qrcode);
+            fprintf(stdout, "\n");
+
+            QRcode_free(qrcode);
+        }
+
+        acc = acc->next;
+    }
+}
+#endif
 
 /* Dump the configuration
 */

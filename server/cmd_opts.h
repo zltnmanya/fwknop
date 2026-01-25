@@ -182,9 +182,9 @@ enum {
 /* Our getopt_long options string.
 */
 #if USE_LIBNETFILTER_QUEUE
-  #define GETOPTS_OPTION_STRING "Aa:c:C:d:Dfhi:Kl:nO:p:P:Rr:StUvV"
+  #define GETOPTS_OPTION_STRING "Aa:c:C:d:Dfhi:Kl:nO:p:P:QRr:StUvV"
 #else
-  #define GETOPTS_OPTION_STRING "Aa:c:C:d:Dfhi:Kl:O:p:P:Rr:StUvV"
+  #define GETOPTS_OPTION_STRING "Aa:c:C:d:Dfhi:Kl:O:p:P:QRr:StUvV"
 #endif
 
 /* Our program command-line options...
@@ -199,6 +199,7 @@ static struct option cmd_opts[] =
     {"packet-limit",            1, NULL, 'C'},
     {"digest-file",             1, NULL, 'd'},
     {"dump-config",             0, NULL, 'D'},
+    {"dump-qr",                 0, NULL, 'Q'},
     {"dump-serv-err-codes",     0, NULL, DUMP_SERVER_ERR_CODES },
     {"exit-parse-config",       0, NULL, EXIT_AFTER_PARSE_CONFIG },
     {"exit-parse-digest-cache", 0, NULL, EXIT_VALIDATE_DIGEST_CACHE },

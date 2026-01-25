@@ -1323,6 +1323,9 @@ config_init(fko_srv_options_t *opts, int argc, char **argv)
             case 'D':
                 opts->dump_config = 1;
                 break;
+            case 'Q':
+                opts->dump_qr = 1;
+                break;
             case DUMP_SERVER_ERR_CODES:
                 dump_server_errors();
                 clean_exit(opts, NO_FW_CLEANUP, EXIT_SUCCESS);
