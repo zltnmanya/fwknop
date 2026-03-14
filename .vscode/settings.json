@@ -1,0 +1,7 @@
+{
+  "fwknop":{
+    "gdbServerHostPort": "localhost:4711",
+    "firewall_type": "--with-iptables=/usr/bin/iptables",
+    "serverBinFolder": "${workspaceFolder}/server/.libs"
+  }
+}

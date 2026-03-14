@@ -1,0 +1,45 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    { "name": "Debug fwknopd server",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${config:fwknop.serverBinFolder}/fwknopd",
+      "args": [
+        "-a", "${input:configDir}/access.conf",
+        "-c", "${input:configDir}/fwknopd.conf",
+        "-d", "${input:configDir}/digest.cache",
+        "-p", "${input:configDir}/fwknopd.pid",
+        "-f"
+      ],
+      "environment": [
+        {
+          "name": "LD_LIBRARY_PATH",
+          "value": "${workspaceFolder}/lib/.libs"
+        }
+      ],
+      "stopAtEntry": true,
+      "cwd": "${config:fwknop.serverBinFolder}",
+      "externalConsole": false,
+      "internalConsoleOptions": "neverOpen",
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for GDB",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+      ],
+      "preLaunchTask": "Build fwknopd server"
+    }
+  ],
+  "inputs": [
+    {
+      "type": "promptString",
+      "description": "config directory",
+      "id": "configDir",
+      "default": "/etc/fwknop"
+    }
+  ]
+}

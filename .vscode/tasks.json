@@ -1,0 +1,77 @@
+{
+  "version": "2.0.0", 
+  "tasks": [
+    /* build configuration */
+    { "label": "Run autogen.sh",
+      "type": "shell",
+      "command": "./autogen.sh",
+      "problemMatcher": []
+    },
+    { "label": "Configure for debugging",
+      "type": "shell",
+      "command": "./configure",
+      "options": {
+        "env": {
+          "CFLAGS": "-O0 -ggdb",
+          "CXXFLAGS": "-O0 -ggdb",
+          "CPPFLAGS": "-O0 -ggdb"
+        }
+      },
+      "runOptions": {
+        "instanceLimit": 1,
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "args": [
+        "${config:fwknop.firewall_type}",
+      ],
+      "problemMatcher": [],
+      "dependsOn":[
+        "Run autogen.sh"
+      ]
+    },
+
+    /* build */
+    { "label": "Build all",
+      "type": "shell",
+      "command": "make -j",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
+    },
+    { "label": "Build fwknopd server",
+      "command": "make fwknopd -j",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+      },
+      "options": {
+        "cwd": "${workspaceFolder}/server"
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+    }
+  ],
+  "inputs": [
+    {
+      "type": "promptString",
+      "description": "config directory",
+      "id": "configDir",
+      "default": "/etc/fwknop"
+    }
+  ]
+}

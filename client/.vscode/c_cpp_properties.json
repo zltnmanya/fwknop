@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "GCC",
+            "includePath": [
+                "${workspaceFolder}/client",
+                "${workspaceFolder}/common",
+                "${workspaceFolder}/lib",
+                "${workspaceFolder}/win32"
+            ],
+            "cStandard": "c89"
+        }
+    ],
+    "version": 4
+}
